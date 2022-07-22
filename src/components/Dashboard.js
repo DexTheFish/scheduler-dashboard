@@ -29,8 +29,14 @@ const data = [
 class Dashboard extends Component {
   state = {
     loading: false,
-    focused: 2
+    focused: null
   };
+
+  selectPanel(id) {
+    this.setState({
+     focused: id
+    });
+   }
 
   render() {
     const dashboardClasses = classnames("dashboard", {
@@ -38,7 +44,7 @@ class Dashboard extends Component {
      });
 
     const filteredData = this.state.focused ? data.filter(panel => this.state.focused === panel.id) : data;
-    const panels = filteredData.map(panel => (<Panel {...panel} key={panel.id}/>));
+    const panels = filteredData.map(panel => (<Panel {...panel} key={panel.id} onSelect={this.selectPanel}/>));
        
     if (this.state.loading) {
       return <Loading />;
